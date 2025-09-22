@@ -1,5 +1,11 @@
 Claro, aqui está a tradução do texto para o português:
 
+## Planejamento
+- [x] Configurar repositório
+- [x] Criar aplicação "Hello World"
+- [ ] Criar Dockerfile
+- [ ] Configurar pipeline CI/CD
+
 # Começando com o Create React App
 
 Este projeto foi inicializado com o [Create React App](https://github.com/facebook/create-react-app).
