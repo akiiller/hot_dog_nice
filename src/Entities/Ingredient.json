@@ -1,0 +1,37 @@
+{
+  "name": "Ingredient",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Nome do insumo"
+    },
+    "current_quantity": {
+      "type": "number",
+      "description": "Quantidade atual em estoque"
+    },
+    "unit": {
+      "type": "string",
+      "enum": [
+        "un",
+        "kg",
+        "g",
+        "L",
+        "ml",
+        "pacote",
+        "pote"
+      ],
+      "description": "Unidade de medida"
+    },
+    "minimum_stock": {
+      "type": "number",
+      "description": "Estoque mínimo para alertas"
+    }
+  },
+  "required": [
+    "name",
+    "current_quantity",
+    "unit",
+    "minimum_stock"
+  ]
+}

@@ -1,0 +1,23 @@
+{
+  "name": "ProductRecipe",
+  "type": "object",
+  "properties": {
+    "product_id": {
+      "type": "string",
+      "description": "ID do produto"
+    },
+    "ingredient_id": {
+      "type": "string",
+      "description": "ID do insumo"
+    },
+    "quantity": {
+      "type": "number",
+      "description": "Quantidade do insumo necessária"
+    }
+  },
+  "required": [
+    "product_id",
+    "ingredient_id",
+    "quantity"
+  ]
+}

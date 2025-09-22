@@ -1,0 +1,23 @@
+{
+  "name": "Product",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Nome do produto"
+    },
+    "price": {
+      "type": "number",
+      "description": "Preço de venda"
+    },
+    "active": {
+      "type": "boolean",
+      "default": true,
+      "description": "Produto ativo para venda"
+    }
+  },
+  "required": [
+    "name",
+    "price"
+  ]
+}

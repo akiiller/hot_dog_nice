@@ -1,0 +1,29 @@
+{
+  "name": "Sale",
+  "type": "object",
+  "properties": {
+    "total_amount": {
+      "type": "number",
+      "description": "Valor total da venda"
+    },
+    "payment_method": {
+      "type": "string",
+      "enum": [
+        "dinheiro",
+        "pix",
+        "cartao"
+      ],
+      "description": "Método de pagamento"
+    },
+    "sale_time": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Data e hora da venda"
+    }
+  },
+  "required": [
+    "total_amount",
+    "payment_method",
+    "sale_time"
+  ]
+}

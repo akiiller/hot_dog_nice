@@ -1,0 +1,71 @@
+import React from "react";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { DollarSign, ShoppingCart, TrendingUp } from "lucide-react";
+import { Skeleton } from "@/components/ui/skeleton";
+
+export default function RevenueCards({ totalRevenue, totalSales, averageTicket, isLoading }) {
+  const cards = [
+    {
+      title: "Faturamento Total",
+      value: `R$ ${totalRevenue.toFixed(2)}`,
+      icon: DollarSign,
+      color: "text-green-600",
+      bgColor: "bg-green-50"
+    },
+    {
+      title: "Total de Vendas", 
+      value: totalSales.toString(),
+      icon: ShoppingCart,
+      color: "text-blue-600",
+      bgColor: "bg-blue-50"
+    },
+    {
+      title: "Ticket Médio",
+      value: `R$ ${averageTicket.toFixed(2)}`,
+      icon: TrendingUp,
+      color: "text-purple-600",
+      bgColor: "bg-purple-50"
+    }
+  ];
+
+  if (isLoading) {
+    return (
+      <>
+        {cards.map((_, index) => (
+          <Card key={index} className="border-2 border-gray-200">
+            <CardHeader className="pb-2">
+              <Skeleton className="h-4 w-24" />
+            </CardHeader>
+            <CardContent>
+              <Skeleton className="h-8 w-20" />
+            </CardContent>
+          </Card>
+        ))}
+      </>
+    );
+  }
+
+  return (
+    <>
+      {cards.map((card, index) => (
+        <Card key={index} className="border-2 border-red-200 hover:shadow-lg transition-all">
+          <CardHeader className="pb-2">
+            <div className="flex items-center justify-between">
+              <CardTitle className="text-sm font-medium text-gray-600">
+                {card.title}
+              </CardTitle>
+              <div className={`p-2 rounded-lg ${card.bgColor}`}>
+                <card.icon className={`w-4 h-4 ${card.color}`} />
+              </div>
+            </div>
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold text-gray-900">
+              {card.value}
+            </div>
+          </CardContent>
+        </Card>
+      ))}
+    </>
+  );
+}

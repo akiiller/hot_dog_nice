@@ -1,0 +1,33 @@
+{
+  "name": "SaleItem",
+  "type": "object",
+  "properties": {
+    "sale_id": {
+      "type": "string",
+      "description": "ID da venda"
+    },
+    "product_id": {
+      "type": "string",
+      "description": "ID do produto"
+    },
+    "quantity": {
+      "type": "number",
+      "description": "Quantidade vendida"
+    },
+    "unit_price": {
+      "type": "number",
+      "description": "Preço unitário no momento da venda"
+    },
+    "subtotal": {
+      "type": "number",
+      "description": "Subtotal do item"
+    }
+  },
+  "required": [
+    "sale_id",
+    "product_id",
+    "quantity",
+    "unit_price",
+    "subtotal"
+  ]
+}
