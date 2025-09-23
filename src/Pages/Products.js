@@ -1,10 +1,14 @@
 import React, { useState, useEffect } from "react";
-import { Product, Ingredient, ProductRecipe } from "@/entities/all";
-import { Button } from "@/components/ui/button";
+
+import Product from "../Entities/Product";
+import ProductRecipe from "../Entities/ProductRecipe";
+import Ingredient from "../Entities/Ingredient";
+
+import { Button } from "../Components/ui/button";
 import { Plus, Search } from "lucide-react";
-import { Input } from "@/components/ui/input";
-import ProductList from "../components/products/ProductList";
-import ProductForm from "../components/products/ProductForm";
+import { Input } from "../Components/ui/input";
+import ProductList from "../Components/products/ProductList";
+import ProductForm from "../Components/products/ProductForm";
 
 export default function Products() {
   const [products, setProducts] = useState([]);

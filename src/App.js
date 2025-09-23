@@ -1,9 +1,28 @@
 import React from 'react';
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { Routes, Route } from "react-router-dom";
+import PDV from "./Pages/PDV";
+import Products from "./Pages/Products";
+import Ingredients from "./Pages/Ingredients";
+import Reports from "./Pages/Reports";
+import Layout from "./Components/Layout";
 
-// 1. Importe seus componentes principais
-import Layout from './Components/Layout'; // Ajuste o caminho se for diferente
-import PDV from './Pages/PDV'; // Ajuste o caminho se for diferente
+function App() {
+  return (
+    <BrowserRouter>
+      <Layout>
+        <Routes>
+          <Route path="/PDV" element={<PDV />} />
+          <Route path="/Products" element={<Products />} />
+          <Route path="/Ingredients" element={<Ingredients />} />
+          <Route path="/Reports" element={<Reports />} />
+          {/* Adicione outras rotas se necessário */}
+        </Routes>
+      </Layout>
+    </BrowserRouter>
+  );
+}
+
+export default App;
 
 // Importe outras páginas que você venha a ter
 // import ProductsPage from './Pages/ProductsPage'; 

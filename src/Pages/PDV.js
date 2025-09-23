@@ -1,12 +1,15 @@
 import React, { useState, useEffect } from "react";
 import { format } from "date-fns";
 import { ptBR } from "date-fns/locale";
+import { getAll as getProducts } from "../Entities/Product";
+import { create as createSale } from "../Entities/Sale";
+import { create as createSaleItem } from "../Entities/SaleItem";
+import { getByProductId } from "../Entities/ProductRecipe";
+import { list as listIngredients, update as updateIngredient } from "../Entities/Ingredient";
+// ...restante do código...
 // ...existing code...
-import Product from "../Entities/Product";
-import Sale from "../Entities/Sale";
-import SaleItem from "../Entities/SaleItem";
-import ProductRecipe from "../Entities/ProductRecipe";
-import Ingredient from "../Entities/Ingredient";
+
+
 import ProductGrid from "../Components/pdv/ProductGrid";
 import OrderSummary from "../Components/pdv/OrderSummary";
 import PaymentModal from "../Components/pdv/PaymentModal";
@@ -25,7 +28,7 @@ export default function PDV() {
 
   const loadProducts = async () => {
     setIsLoading(true);
-    const data = await Product.filter({ active: true });
+    const data = await getProducts();
     setProducts(data);
     setIsLoading(false);
   };
@@ -77,7 +80,7 @@ export default function PDV() {
     const saleTime = new Date().toISOString();
 
     // Criar venda
-    const sale = await Sale.create({
+    const sale = await createSale({
       total_amount: totalAmount,
       payment_method: paymentMethod,
       sale_time: saleTime
@@ -85,7 +88,7 @@ export default function PDV() {
 
     // Criar itens da venda
     for (const orderItem of currentOrder) {
-      await SaleItem.create({
+      await createSaleItem({
         sale_id: sale.id,
         product_id: orderItem.product.id,
         quantity: orderItem.quantity,
@@ -105,15 +108,15 @@ export default function PDV() {
   const processStockReduction = async (productId, quantity) => {
     try {
       // Buscar receita do produto
-      const recipes = await ProductRecipe.filter({ product_id: productId });
+      const recipes = await getByProductId({ product_id: productId });
       
       for (const recipe of recipes) {
-        const ingredient = await Ingredient.list();
+        const ingredient = await listIngredients();
         const ingredientData = ingredient.find(i => i.id === recipe.ingredient_id);
         
         if (ingredientData) {
           const newQuantity = ingredientData.current_quantity - (recipe.quantity * quantity);
-          await Ingredient.update(ingredientData.id, {
+          await updateIngredient(ingredientData.id, {
             current_quantity: Math.max(0, newQuantity)
           });
         }
@@ -122,6 +125,8 @@ export default function PDV() {
       console.error("Erro ao processar baixa de estoque:", error);
     }
   };
+
+  // ...existing code...
 
   return (
     <div className="h-screen bg-gray-50 flex flex-col">
@@ -138,20 +143,24 @@ export default function PDV() {
         </div>
       </div>
 
+      {/* Layout principal */}
       <div className="flex-1 flex overflow-hidden">
-        {/* Products Grid */}
-        <div className="flex-1 p-4 overflow-y-auto">
-          <div className="mb-4">
+        {/* Espaço vazio à esquerda (remova se não quiser nada) */}
+        {/* <div className="w-64"></div> */}
+
+        {/* Produtos ao centro */}
+        <div className="flex-1 flex justify-center items-start p-4 overflow-y-auto">
+          <div className="w-full max-w-2xl">
             <h2 className="text-lg font-semibold text-gray-700 mb-2">SELECIONE OS PRODUTOS:</h2>
+            <ProductGrid 
+              products={products} 
+              onProductClick={addToOrder}
+              isLoading={isLoading}
+            />
           </div>
-          <ProductGrid 
-            products={products} 
-            onProductClick={addToOrder}
-            isLoading={isLoading}
-          />
         </div>
 
-        {/* Order Summary */}
+        {/* Comanda à direita */}
         <div className="w-80 bg-white border-l-2 border-red-200">
           <OrderSummary
             currentOrder={currentOrder}

@@ -1,0 +1,40 @@
+# Define a versão da sintaxe do Docker Compose
+version: '3.8'
+
+# Define os serviços (containers) que compõem a sua aplicação
+services:
+  # Serviço do Backend
+  backend:
+    # Constrói a imagem Docker usando o Dockerfile na pasta './backend'
+    build: ./backend
+    # Nome do container para fácil identificação
+    container_name: hotdog-backend
+    ports:
+      # Mapeia a porta 3001 do seu computador para a porta 3001 do container
+      # Se sua API rodar em outra porta, altere o segundo número
+      - "3001:3001"
+    volumes:
+      # Monta um volume para persistir o banco de dados SQLite
+      # Isso garante que os dados não sejam perdidos quando o container parar
+      - db-data:/app/data
+    # Garante que o container reinicie automaticamente em caso de falha
+    restart: unless-stopped
+
+  # Serviço do Frontend
+  frontend:
+    # Constrói a imagem Docker usando o Dockerfile na pasta './frontend'
+    build: ./frontend
+    container_name: hotdog-frontend
+    ports:
+      # Mapeia a porta 80 do seu computador para a porta 80 do container (Nginx)
+      - "80:80"
+    # Declara que o frontend depende do backend.
+    # O Docker Compose iniciará o backend antes do frontend.
+    depends_on:
+      - backend
+    restart: unless-stopped
+
+# Define os volumes nomeados para persistência de dados
+volumes:
+  # Volume para armazenar o arquivo do banco de dados SQLite
+  db-data:

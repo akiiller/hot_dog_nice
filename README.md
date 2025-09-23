@@ -2,7 +2,7 @@ Claro, aqui está a tradução do texto para o português:
 
 ## Planejamento
 - [x] Configurar repositório
-- [x] Criar aplicação "Hello World"
+- [x] Criar aplicação "Hog Dog Nice"
 - [ ] Criar Dockerfile
 - [ ] Configurar pipeline CI/CD
 
